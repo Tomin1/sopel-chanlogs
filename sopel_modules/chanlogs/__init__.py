@@ -23,6 +23,12 @@ import sopel.module
 import sopel.tools
 from sopel.config.types import StaticSection, ValidatedAttribute, FilenameAttribute, NO_DEFAULT
 
+# To support older versions of sopel without echo
+if hasattr(sopel.module, 'echo'):
+    echo = sopel.module.echo
+else:
+    echo = lambda x: x
+
 MESSAGE_TPL = "{datetime}  <{trigger.nick}> {message}"
 ACTION_TPL = "{datetime}  * {trigger.nick} {message}"
 NICK_TPL = "{datetime}  *** {trigger.nick} is now known as {trigger.sender}"
@@ -120,6 +126,7 @@ def setup(bot):
 
 
 @sopel.module.rule('.*')
+@echo
 @sopel.module.unblockable
 def log_message(bot, message):
     "Log every message in a channel"
