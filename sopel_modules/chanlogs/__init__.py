@@ -121,7 +121,7 @@ def setup(bot):
     bot.config.define_section('chanlogs', ChanlogsSection)
 
     # locks for log files
-    if not bot.memory.contains('chanlog_locks'):
+    if not 'chanlog_locks' in bot.memory:
         bot.memory['chanlog_locks'] = sopel.tools.SopelMemoryWithDefault(threading.Lock)
 
 
